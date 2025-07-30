@@ -1,0 +1,1 @@
+export type signInFlow = "signin" | "signup";
