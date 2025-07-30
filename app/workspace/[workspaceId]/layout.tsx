@@ -8,6 +8,7 @@ const WorkspaceIdLayout = ({children}: WorkspaceIdLayoutProps) => {
     return (
         <div className="h-full">
             <Toolbar />
+            <h2>Starter</h2>
             {children}
         </div>
      ); 
