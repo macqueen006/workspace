@@ -14,9 +14,9 @@ export default convexAuthNextjsMiddleware(async (request, { convexAuth }) => {
   if (isProtectedRoute(request) && !(await convexAuth.isAuthenticated())) {
     return nextjsMiddlewareRedirect(request, "/auth");
   }
-  if (!isSignInPage(request) && !(await convexAuth.isAuthenticated())) {
-    return nextjsMiddlewareRedirect(request, "/auth");
-  }
+  // if (!isSignInPage(request) && !(await convexAuth.isAuthenticated())) {
+  //   return nextjsMiddlewareRedirect(request, "/auth");
+  // }
 });
 
 export const config = {
