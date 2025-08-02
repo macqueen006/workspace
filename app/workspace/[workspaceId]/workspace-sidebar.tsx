@@ -3,14 +3,16 @@
 import { useCurrentMember } from "@/features/members/api/use-current-member";
 import { useGetWorkspace } from "@/features/workspaces/api/use-get-workspace";
 import { useWorkspaceId } from "@/hooks/use-workspace-id";
-import { AlertTriangle, Loader } from "lucide-react";
+import { AlertTriangle, Loader, MessageSquareText, SendHorizonal } from "lucide-react";
 import WorkspaceHeader from "./workspace-header";
+import { SidebarItem } from "./sidebar-item";
 
 const WorkspaceSidebar = () => {
   const workspaceId = useWorkspaceId();
   const { data: member, isLoading: isMemberLoading } = useCurrentMember({
     workspaceId,
   });
+
   const { data: workspace, isLoading: isWorkspaceLoading } = useGetWorkspace({
     id: workspaceId,
   });
@@ -33,7 +35,22 @@ const WorkspaceSidebar = () => {
   }
   return (
     <div className="flex flex-col bg-[#5e2c5f] h-full">
-      <WorkspaceHeader workspace={workspace} isAdmin={member.role === "admin"} />
+      <WorkspaceHeader
+        workspace={workspace}
+        isAdmin={member.role === "admin"}
+      />
+      <div className="flex flex-col px-2 mt-3">
+        <SidebarItem
+          label="Threads"
+          id="threads"
+          Icon={MessageSquareText}
+        />
+        <SidebarItem
+          label="Drafts & Sent"
+          id="drafts"
+          Icon={SendHorizonal}
+        />
+      </div>
     </div>
   );
 };
