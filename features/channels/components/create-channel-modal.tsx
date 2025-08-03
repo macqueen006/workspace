@@ -2,16 +2,15 @@ import React, { useState } from "react";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { useCreateChannelModal } from "../store/use-create-channel-modal";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useCreateChannel } from "../api/use-create-channel";
 import { useWorkspaceId } from "@/hooks/use-workspace-id";
+import { toast } from "sonner";
 
 export const CreateChannelModal = () => {
   const [open, setOpen] = useCreateChannelModal();
@@ -38,6 +37,7 @@ export const CreateChannelModal = () => {
       },
       {
         onSuccess: (id) => {
+          toast.success("Channel Created successfully!");
           //TODO: Redirect to new channel
           handleClose();
         },
