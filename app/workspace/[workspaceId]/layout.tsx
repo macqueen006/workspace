@@ -12,6 +12,7 @@ interface WorkspaceIdLayoutProps {
 }
 
 const WorkspaceIdLayout = ({ children }: WorkspaceIdLayoutProps) => {
+  
   return (
     <div className="h-full">
       <Toolbar />
