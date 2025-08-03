@@ -10,6 +10,29 @@ const generateCode = () => {
   return code;
 };
 
+export const newJoinCode = mutation({
+  args: { workspaceId: v.id("workspaces") },
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+    // If userId is not found, throw an error
+    if (!userId) {
+      throw new Error("User not authenticated");
+    }
+    const member = await ctx.db
+      .query("members")
+      .withIndex("by_workspace_id_user_id", (q) =>
+        q.eq("workspaceId", args.workspaceId).eq("userId", userId)
+      )
+      .unique();
+    if (!member || member.role !== "admin") throw new Error("Unauthorized");
+    const joinCode = generateCode();
+    await ctx.db.patch(args.workspaceId, {
+      joinCode,
+    });
+    return args.workspaceId;
+  },
+});
+
 // This file defines the API for managing workspaces in the application.
 export const create = mutation({
   args: {
