@@ -31,8 +31,8 @@ const WorkspaceIdPage = () => {
     if (
       workspaceLoading ||
       channelsLoading ||
+      memberLoading ||
       !workspace ||
-      !memberLoading ||
       !member
     )
       return;
