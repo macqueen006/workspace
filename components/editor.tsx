@@ -11,10 +11,21 @@ import { ImageIcon, Smile } from "lucide-react";
 import { Hint } from "./hint";
 import { Delta, Op } from "quill/core";
 import { cn } from "@/lib/utils";
+import { EmojiPopover } from "./ui/emoji-popover";
+
 
 type EditorValue = {
   image: File | null;
   body: string;
+};
+
+type EmojiType = {
+  id: string;
+  name: string;
+  native: string;
+  unified: string;
+  keywords: string[];
+  shortcodes: string;
 };
 
 interface EditorProps {
@@ -130,6 +141,11 @@ const Editor = ({
     }
   };
 
+  const onEmojiSelect = (emoji: EmojiType) => {
+    const quill = quillRef.current;
+    quill?.insertText(quill?.getSelection()?.index || 0, emoji.native)
+  }
+
   const isEmpty = text.replace(/<(.|\n)*?>/g, "").trim().length === 0;
 
   return (
@@ -149,16 +165,15 @@ const Editor = ({
               <PiTextAa className="size-4" />
             </Button>
           </Hint>
-          <Hint label="Emoji">
+          <EmojiPopover onEmojiSelect={onEmojiSelect}>
             <Button
               disabled={disabled}
               variant="ghost"
               size="iconSm"
-              onClick={() => {}}
             >
               <Smile className="size-4" />
             </Button>
-          </Hint>
+          </EmojiPopover>
           {variant === "create" && (
             <Hint label="Image">
               <Button
